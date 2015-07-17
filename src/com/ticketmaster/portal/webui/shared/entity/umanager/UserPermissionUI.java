@@ -35,6 +35,8 @@ public class UserPermissionUI implements Serializable {
 	private String remark;
 
 	private Long userId;
+
+
 	
 	private Long permissionId;
 
