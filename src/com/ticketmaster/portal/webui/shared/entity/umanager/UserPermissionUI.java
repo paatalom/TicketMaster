@@ -38,6 +38,8 @@ public class UserPermissionUI implements Serializable {
 	
 	private Long permissionId;
 
+
+
 	public UserPermissionUI() {
 	}
 
