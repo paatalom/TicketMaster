@@ -1,0 +1,422 @@
+@font-face {
+	font-family: 'BPGNinoMtavruliBold';
+	src: url('bpg_nino_mtavruli_bold-webfont.eot');
+	src: url('bpg_nino_mtavruli_bold-webfont.eot?#iefix')
+		format('embedded-opentype'),
+		url('bpg_nino_mtavruli_bold-webfont.woff') format('woff'),
+		url('bpg_nino_mtavruli_bold-webfont.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body {
+	margin: 0px;
+}
+
+.appTitleStyle {
+	font-size: 24px;
+	padding-left: 10px;
+	font-style: italic;
+	font-weight: bold;
+}
+
+.bbbb {
+	border: 1px solid red;
+}
+
+.mainMenu {
+	font-size: 14px;
+	font-weight: bold;
+	color: #004A79;
+}
+
+.mainMenuOver {
+	font-size: 14px;
+	font-weight: bold;
+	color: #004A79;
+}
+
+.mainMenuDown {
+	font-size: 14px;
+	font-weight: bold;
+	color: #004A79;
+}
+
+.copyright {
+	color: #004A79;
+	font-size: 12px;
+}
+
+.linkLabelStyle {
+	font-weight: bold;
+	font-size: 11px;
+	text-decoration: underline;
+	color: blue;
+}
+
+.linkStyle {
+	font-weight: bold;
+	font-size: 12px;
+	color: blue;
+}
+
+.linkTextStyle {
+	font-weight: bold;
+	font-size: 12px;
+	text-decoration: underline;
+	color: blue;
+	cursor: pointer;
+	width: 80px;
+}
+
+.redText11 {
+	color: red;
+	font-size: 11px;
+}
+
+.redText13 {
+	color: red;
+	font-size: 13px;
+}
+
+.phoneStyle {
+	font-size: 13px;
+	color: blue;
+	font-weight: bold;
+}
+
+.textSize12 {
+	font-size: 12px;
+}
+
+.textSize12RedAndBold {
+	font-size: 12px;
+	font-weight: bold;
+	color: red;
+}
+
+.textSize12Red {
+	font-size: 12px;
+	color: #d64949;
+	font-weight: bold;
+}
+
+.textSize13Sylver {
+	font-size: 12px;
+	font-weight: bold;
+	color: #555555;
+}
+
+.underLine {
+	border-bottom: 1px solid #A7ABB4;
+}
+
+.textSize12Bold {
+	font-size: 13px;
+	font-weight: bold;
+	color: #287fd6;
+}
+
+.textSize18Bold {
+	font-size: 18px;
+	font-weight: bold;
+	color: #287fd6;
+}
+
+.textSize14Bold {
+	font-size: 14px;
+	font-weight: bold;
+	color: black;
+}
+
+.textSize12Bold {
+	font-size: 12px;
+	font-weight: bold;
+	color: black;
+}
+
+.textTop {
+	vertical-align: top;
+	padding: 5px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.textInGrid {
+	padding: 7px;
+	font-size: 12px;
+}
+
+.textInGridCustom {
+	font-size: 12px;
+}
+
+.textInGridCustom td {
+	padding-right: 10px;
+}
+
+.textInGridPadding {
+	padding-right: 5px;
+}
+
+.bottomBorder {
+	border-bottom: 1px solid;
+}
+
+.vizardformStyle {
+	background-color: #f1f5fb;
+	border: 1px solid #a7abb4;
+	margin-top: 10px;
+	padding: 5px;
+}
+
+.dlgFooterStyle {
+	background-color: #f1f5fb;
+}
+
+.hintInvisibleStyle {
+	color: #f1f5fb;
+}
+
+.myMenuMain {
+	background-color: white;
+	/*background-image: url("../images/Menu/menu_background.png");*/ /* file not found */
+	background-repeat: repeat-y;
+	background-attachment: scroll;
+	background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #fafafa),
+		color-stop(25, #dbdbdb), color-stop(25, #ffffff),
+		color-stop(100%, #ffffff));
+	background-image: -webkit-linear-gradient(left, #fafafa 0%, #dbdbdb 25px, #ffffff 25px,
+		#ffffff 100%);
+	background-image: -moz-linear-gradient(left, #fafafa 0%, #dbdbdb 25px, #ffffff 25px,
+		#ffffff 100%);
+	background-image: -o-linear-gradient(left, #fafafa 0%, #dbdbdb 25px, #ffffff 25px, #ffffff
+		100%);
+	background-image: -ms-linear-gradient(left, #fafafa 0%, #dbdbdb 25px, #ffffff 25px,
+		#ffffff 100%);
+	background-image: linear-gradient(left, #fafafa 0%, #dbdbdb 25px, #ffffff 25px, #ffffff
+		100%);
+	filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=1,
+		startColorstr='#fafafa', endColorstr='white');
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.gradient(GradientType=1, startColorstr='#fafafa', endColorstr='white')";
+	border: 1px solid #8fa7c7;
+}
+
+.gttNavigTextStyle {
+	background-color: #f1f5fb;
+	font-size: 12px;
+	font-weight: bold;
+	border: 1px solid #a7abb4;
+	padding: 5px;
+}
+
+.gwt-DialogBox {
+	border: 2px outset;
+	background-color: white;
+}
+
+.treeAvailLink {
+	font-size: 11px;
+	color: blue;
+	cursor: pointer;
+}
+
+.treeAvailLink:HOVER {
+	text-decoration: underline;
+	background: #d6e8ff;
+}
+
+.treeCurLink {
+	font-size: 11px;
+	color: blue;
+	cursor: pointer;
+}
+
+.treeCurLink:HOVER {
+	color: red;
+	text-decoration: underline;
+	background: #d6e8ff;
+}
+
+.textItemBold {
+	color: #770000;
+	font-size: 11px;
+}
+
+.login_Warning {
+	background-color: #F3F3F3;
+	border: 1px solid #1489D3;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin-top: 20px;
+	width: 500px;
+	font-size: 14px;
+}
+
+a:hover {
+	color: #FF3333;
+}
+
+a {
+	color: #e41b23;
+	text-decoration: none;
+}
+
+h3 {
+	font-family: 'BPGNinoMtavruliBold', Tahoma, Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 14px;
+	color: #e41b23;
+}
+
+/* Footer */
+div.footer_wrapper {
+	clear: both;
+	border-top: solid 1px #CCCCCC;
+	background-color: #F8F8F8;
+	background-image: -ms-linear-gradient(top, #FFFFFF 0%, #F8F8F8 100%);
+	background-image: -moz-linear-gradient(top, #FFFFFF 0%, #F8F8F8 100%);
+	background-image: -o-linear-gradient(top, #FFFFFF 0%, #F8F8F8 100%);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF),
+		color-stop(1, #F8F8F8));
+	background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #F8F8F8 100%);
+	background-image: linear-gradient(top, #FFFFFF 0%, #F8F8F8 100%);
+}
+
+table.footer {
+	width: 1200px;
+	height: 80px;
+	font-size: 12px;
+}
+
+td.footer_logos {
+	text-align: left;
+}
+
+td.footer_hot_line {
+	padding: 0 15px;
+	border-left: dotted 1px #CCCCCC;
+	border-right: dotted 1px #CCCCCC;
+}
+
+td.footer_logos img {
+	height: 25px;
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 7px;
+}
+
+td.footer_rights img {
+	margin-bottom: 5px;
+}
+
+/* Main Menu */
+div.menu_box_wrapper {
+	position: relative;
+	margin-bottom: 0px;
+}
+
+ul.main_menu {
+	margin-top: 0px;
+	height: 50px;
+	list-style-type: none;
+	display: block !important;
+	background-color: #e41b23;
+	border: solid 1px #CC0000;
+}
+
+ul.main_menu li {
+	display: inline;
+}
+
+ul.main_menu li a {
+	float: left;
+	color: #FFFFFF;
+	padding: 0 10px;
+	text-decoration: none;
+	line-height: 50px;
+	border-right: solid 1px #D80000;
+}
+
+ul.main_menu li a.main_logo {
+	display: block;
+	padding: 9px 15px;
+	height: 31px;
+}
+
+ul.main_menu li a:hover {
+	background-color: #F80000;
+}
+
+ul.main_menu li a.main_logo:hover {
+	background: none;
+}
+
+li a {
+	font-size: 18px;
+	font-family: 'BPGNinoMtavruliBold', Tahoma, Arial, Helvetica, sans-serif;
+}
+
+.btn {
+	padding: 10px 10px 7px 10px;
+	float: right;
+	margin-right: 10px;
+	margin-top: 7px;
+	cursor: pointer;
+}
+
+.red_btn {
+	color: #FFFFFF;
+	border-color: #BF362F;
+	border-bottom-color: #AC362F;
+	background-color: #BD362F; *
+	background-color: #BD362F;
+	background-image: -ms-linear-gradient(top, #EE5F5B, #BD362F);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EE5F5B),
+		to(#BD362F));
+	background-image: -webkit-linear-gradient(top, #EE5F5B, #BD362F);
+	background-image: -o-linear-gradient(top, #EE5F5B, #BD362F);
+	background-image: -moz-linear-gradient(top, #EE5F5B, #BD362F);
+	background-image: linear-gradient(top, #EE5F5B, #BD362F);
+	background-repeat: repeat-x;
+	filter: progid: dximagetransform.microsoft.gradient(startColorstr='#EE5F5B',
+		endColorstr='#BD362F', GradientType=0);
+	filter: progid: dximagetransform.microsoft.gradient(enabled=false);
+}
+
+.red_btn:hover {
+	color: #FFFFFF;
+	border-color: #E95F5B;
+	border-bottom-color: #D55F5B;
+	background-color: #EE5F5B; *
+	background-color: #EE5F5B;
+	background-image: -ms-linear-gradient(top, #FF6F6F, #EE5F5B);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ff6f6f),
+		to(#EE5F5B));
+	background-image: -webkit-linear-gradient(top, #FF6F6F, #EE5F5B);
+	background-image: -o-linear-gradient(top, #FF6F6F, #EE5F5B);
+	background-image: -moz-linear-gradient(top, #FF6F6F, #EE5F5B);
+	background-image: linear-gradient(top, #FF6F6F, #EE5F5B);
+	background-repeat: repeat-x;
+	filter: progid: dximagetransform.microsoft.gradient(startColorstr='#FF6F6F',
+		endColorstr='#EE5F5B', GradientType=0);
+	filter: progid: dximagetransform.microsoft.gradient(enabled=false);
+}
+
+.round_border {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+}
+
+.medium {
+	font-size: 11px;
+	font-family: 'BPGNinoMtavruliBold', Tahoma, Arial, Helvetica, sans-serif;
+}
+
+.colorRedAndBold {
+	color: red;
+	font-weight: bold;
+}

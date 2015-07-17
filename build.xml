@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="Compiler" basedir="." default="default">
+    <property file="build.properties" />
+    <property name="target" value="1.7" />
+    <property name="ccare_jar" value="CCareEJB.jar" />
+    <property name="war.classes" value="war/WEB-INF/classes" />
+    <path id="classpath_ref">
+        <!-- So that we can get jndi.properties for InitialContext -->
+        <fileset dir="../CCareEJB/lib">
+            <include name="**/*.jar" />
+        </fileset>
+        <fileset dir="lib">
+            <include name="**/*.jar" />
+        </fileset>
+        <fileset dir="${gwt_dir}">
+            <include name="**/*.jar" />
+        </fileset>
+        <pathelement location="${war.classes}" />
+        <pathelement location="dist" />
+        <fileset dir="./">
+            <include name="${ccare_jar}" />
+        </fileset>
+    </path>
+
+    <property name="classpath" refid="classpath_ref" />
+
+
+    <target name="prepare" description="Default">
+        <delete dir="war/ticketmaster" />
+        <delete dir="war/WEB-INF/deploy" />
+        <delete dir="war/WEB-INF/lib" />
+        <delete dir="${war.classes}" />
+        <delete dir="dist" />
+        <delete file="${ccare_jar}" />
+        <mkdir dir="dist" />
+        <copy todir="dist" overwrite="true">
+            <fileset dir="../CCareEJB/ejbModule" includes="**" />
+        </copy>
+
+        <delete>
+            <fileset dir="dist" includes="**/*.class" />
+        </delete>
+
+
+        <javac includeantruntime="false" destdir="dist" debug="true" verbose="false" deprecation="off" optimize="on" includes="**" source="${target}" target="${target}">
+            <compilerarg value="-Xlint:unchecked"/>
+            <compilerarg value="-Xlint:deprecation"/>
+            <classpath refid="classpath_ref" />
+            <src path="dist" />
+        </javac>
+
+
+
+        <jar destfile="${ccare_jar}">
+            <fileset dir="dist" />
+        </jar>
+        <delete dir="dist" />
+
+
+
+        <mkdir dir="${war.classes}" />
+        <!--<echo message="${classpath}" />-->
+        <copy todir="${war.classes}" overwrite="true">
+            <fileset dir="src" includes="**" />
+        </copy>
+        <copy todir="${war.classes}" overwrite="true">
+            <fileset dir="prod" includes="**" />
+        </copy>
+        <delete file="${war.classes}/persistence.xml" />
+
+        <delete dir="${war.classes}/META-INF" />
+        <delete dir="gwt-unitCache">
+        </delete>
+        <mkdir dir="${war.classes}/META-INF" />
+
+        <copy file="prod/persistence.xml" tofile="${war.classes}/META-INF/persistence.xml" overwrite="true" />
+        <delete file="src/com/magti/billing/webui/CCareFE.gwt.xml"/>
+        <copy file="prod/CCareFE.gwt.xml" tofile="src/com/magti/billing/webui/CCareFE.gwt.xml" overwrite="true" />
+        <delete>
+            <fileset dir="${war.classes}" includes="**/*.class" />
+        </delete>
+
+        <javac includeantruntime="false" destdir="${war.classes}" debug="true" verbose="false" deprecation="off" optimize="on" includes="**" source="${target}" target="${target}">
+            <compilerarg value="-Xlint:unchecked" />
+            <classpath refid="classpath_ref" />
+            <src path="${war.classes}" />
+        </javac>
+    </target>
+    <property name="gwt.module.id" value="${gwt.module.id}" />
+    <target name="gwt_compile" description="Default" depends="prepare">
+        <java classname="com.google.gwt.dev.Compiler" fork="yes" failonerror="true" maxmemory="${gwt_memorie}">
+            <!--<arg value="-localWorkers" />
+            <arg value="2" />-->
+            <classpath refid="classpath_ref" />
+            <arg value="-style" />
+            <arg value="OBFUSCATED" />
+            <arg value="${gwt.module.id}" />
+        </java>
+    </target>
+
+    <target name="war" depends="gwt_compile">
+        <delete file="${war_name}" />
+        <war destfile="${war_name}" webxml="war/WEB-INF/web.xml">
+            <fileset dir="war" />
+        </war>
+    </target>
+    <target name="default" description="Default" depends="war">
+    </target>
+</project>

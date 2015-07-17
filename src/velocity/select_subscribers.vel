@@ -1,0 +1,162 @@
+select
+	t.id,
+#if($values.param_id)
+	$values.param_id
+#else
+	t.user_identifier,
+	t.reg_date,
+	to_char(t.reg_date, 'DD/MM/YYYY HH24:MI:SS') as reg_date_txt,
+	ccare.getdescription(stp.description_id, $values.languageId) subscriber_type_descr,
+	ci.id contract_item_id,
+	ci.name as contract_item_name,
+	decode(p.party_type_id,
+		1, p.org_ident_no || ' ' || p.org_legal_name,
+		2, p.ind_name || ' ' || p.ind_family_name,
+		decode($values.languageId, 1, 'Anonymous', ccare.map_char_codes_geo('anonimuri'))) party_name,
+	pr.private_balance,
+	pr.private_threshold,
+	co.corporate_balance,
+	co.corporate_threshold,
+	ss.id status_id,
+	ccare.getdescription(ss.description_id, $values.languageId) subscriber_status_descr,
+	to_char(st.status_validity_period, 'DD/MM/YYYY') as status_validity_period_txt,
+	ccare.getdescription(ctxp.description_id, $values.languageId) c_taxation_policy_descr,
+	ccare.getdescription(ptxp.description_id, $values.languageId) taxation_policy_descr,
+	decode(ci.subscriber_owner,
+		0, decode($values.languageId, 1, 'Contract', N'კონტრაქტი'),
+		1, decode($values.languageId, 1, 'Subscriber', N'აბონენტი'),
+		   decode($values.languageId, 1, 'Unknown', N'უცნობი')
+	) as subscriber_owner,
+	(
+		select to_char(wm_concat(g.name)) as groups from ccare.corporate_groups cg
+		inner join ccare.groups g on g.id = cg.group_id
+		where cg.item_type = 1 and cg.item_id = ci.id
+	) as contr_item_groups,
+	b.bundle_name,
+	decode(b.bundle_type,
+		0, decode($values.languageId, 1, 'Contract', N'კონტრაქტის'),
+		1, decode($values.languageId, 1, 'Subscriber', N'აბონენტის'),
+		   decode($values.languageId, 1, 'Unknown', N'უცნობი')
+	) as bundle_type,
+	to_char(b.bundle_price, 'FM99999999990.0000') bundle_price
+#end
+ from
+	ccare.subscriber t
+	left join ccare.subcr_crd_crtl_status st on st.subscriber_id = t.id and st.crd_ctrl_group_id <> 20
+	left join ccare.subscriber_status ss on ss.id = st.status_id
+	left join srvprov.subscriber_service_param ssp on ssp.subscriber_id = t.id and ssp.service_param_code = 81001
+	inner join ccare.party p on p.id = t.user_party_id
+	inner join ccare.contract c on c.id = t.contract_id
+	left join ccare.contract_items_to_subscribers csi on csi.subscriber_id = t.id
+	left join ccare.contract_items ci on csi.contract_item_id = ci.id
+	left join ccare.subscriber_type stp on t.subscriber_type = stp.id
+	left join ccare.contract_items_to_bundles ci2b on ci2b.contract_item_id = ci.id
+	left join ccare.bundle b on b.id = ci2b.bundle_id and b.bundle_type = 0
+	left join ccare.tax_policy ctxp on ctxp.id = ci.taxation_policy_id
+	left join ccare.tax_policy ptxp on ptxp.id = ci.private_taxation_policy_id
+	left join (
+		select sa.subscriber_id,
+		a.balance private_balance,
+		tt.threshold_value private_threshold,
+		a.account_rel_type_id
+		from ccare.subscribers_to_accounts sa
+		inner join ccare.account a on a.id = sa.account_id
+		left join ccare.account_threshold tt on tt.account_id = a.id
+		and tt.threshold_type_id = 5
+	) pr on t.id = pr.subscriber_id and pr.account_rel_type_id = 113
+	left join (
+		select sa.subscriber_id,
+		a.balance corporate_balance,
+		tt.threshold_value corporate_threshold,
+		a.account_rel_type_id
+		from ccare.subscribers_to_accounts sa
+		inner join ccare.account a on a.id = sa.account_id
+		left join ccare.account_threshold tt on tt.account_id = a.id
+		and tt.threshold_type_id = 5
+	) co on t.id = co.subscriber_id and co.account_rel_type_id = 114
+where
+	t.contract_id = $values.contract_id
+	
+	#set ($userContracts=$session.MagticomPortalSessionObject.userContracts)
+	#set ($kkk=0)
+		and t.contract_id in (
+		#foreach($iter in $userContracts)
+			#if($kkk==1)
+				,
+			#end
+			#set ($kkk=1)
+		    $!iter 
+		#end
+	)
+	
+	#if($values.user_identifier)
+		and t.user_identifier in
+		(select distinct trim(substr(txt,
+                        instr(txt, ',', 1, level) + 1,
+                        instr(txt, ',', 1, level + 1) -
+                        instr(txt, ',', 1, level) - 1)) as token
+		from (select ',' || $values.user_identifier || ',' as txt from dual)
+		connect by level <= length(txt) - length(replace(txt, ',', '')) - 1)
+	#end
+	#if($values.contract_item)
+		and ci.id = $values.contract_item
+	#end
+	#if($values.group)
+		and t.id in (select s2g.subscriber_id from ccare.subscriber_to_group s2g where s2g.group_id = $values.group)
+	#end
+	#if($values.subscriber_type)
+		and t.subscriber_type = $values.subscriber_type
+	#end
+	#if($values.reg_from_date and $values.reg_to_date)
+		and t.reg_date between $values.reg_from_date and $values.reg_to_date
+	#elseif($values.reg_from_date)
+		and t.reg_date > $values.reg_from_date
+	#elseif($values.reg_to_date)
+		and t.reg_date < $values.reg_to_date
+	#end
+	#if($values.account_type)
+		#if($values.balance_from and $values.balance_to)
+			and
+			#if($values.account_type == 113)
+				pr.private_balance
+			#else
+				co.corporate_balance
+			#end
+			between $values.balance_from and $values.balance_to
+		#end
+		#if($values.threshold_type)
+			#if($values.threshold_type == 'Limited')
+				and
+				#if($values.account_type == 113)
+					pr.private_threshold != 0 and pr.private_threshold != 100000
+				#else
+					co.corporate_threshold != 0 and co.corporate_threshold != 100000
+				#end
+			#elseif($values.threshold_from and $values.threshold_to)
+				and
+				#if($values.account_type == 113)
+					pr.private_threshold
+				#else
+					co.corporate_threshold
+				#end
+				between $values.threshold_from and $values.threshold_to
+			#end
+		#end
+	#end
+	#if($values.statuses_list)
+		and st.status_id in (
+		select to_number(p.token) from 
+		(SELECT distinct TRIM(SUBSTR(txt,
+               INSTR(txt, ',', 1, level) + 1,
+               INSTR(txt, ',', 1, level + 1) -
+               INSTR(txt, ',', 1, level) - 1)) AS token
+	    FROM (SELECT ',' || $values.statuses_list || ',' AS txt
+      		FROM dual)
+	    CONNECT BY level <= LENGTH(txt) - LENGTH(REPLACE(txt, ',', '')) - 1) p					
+		)
+	#end
+#if($values.param_id)
+	and t.user_identifier is not null
+#else
+	order by t.reg_date desc
+#end
